@@ -1,6 +1,7 @@
 const NodeMediaServer = require('node-media-server');
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 
@@ -18,7 +19,7 @@ const config = {
     allow_origin: '*'
   },
   trans: {
-    ffmpeg: 'C:\\Program Files\\ffmpeg\\bin\\ffmpeg.exe',
+    ffmpeg: process.env.FFMPEG_PATH,
     tasks: [
       {
         app: 'live',
@@ -40,7 +41,7 @@ app.get("/", (req, res) => {
     res.status(200).sendFile(path.join(__dirname, 'public', 'index.html'))
 });
 
-port = process.env.PORT || 8001;
+port = process.env.PORT;
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
